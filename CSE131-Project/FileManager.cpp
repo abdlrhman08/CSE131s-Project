@@ -24,7 +24,7 @@ std::string FileManager::read(int patch, int place) {
 }
 
 void FileManager::write(std::string data, int patch, int place) {
-	std::string bufferdata = "               ";
+	std::string bufferdata( PARTSIZE, ' ');
 
 	for (int i = 0; i < data.length(); i++)
 		bufferdata[i] = data[i];

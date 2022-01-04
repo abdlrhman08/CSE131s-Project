@@ -7,7 +7,7 @@ int main() {
 
 	FileManager fs("data.txt");
 	std::cout << fs.read(0, 0) << std::endl;
-	fs.write("Ahmed", 1, 1);
+	fs.write("Ahmed", 0, 0);
 
 	return 0;
 }
