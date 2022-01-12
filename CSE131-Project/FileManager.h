@@ -10,15 +10,17 @@ class FileManager
 private:
 	std::fstream fs;
 
-	int filesize, patchnum;
-	const int PATCHSIZE = 31, PARTSIZE = 15;
+	int filesize, patchnum, PATCHSIZE;
+	const int PARTSIZE = 30;
 
 public:
 
 	std::string read(int patch, int patchPart = 0);
 	void write(std::string data, int patch, int patchPart);
 
-	FileManager(std::string filename);
+	int getObjectNumber() const;
+
+	FileManager(std::string filename, int patchsize);
 	~FileManager();
 
 };
