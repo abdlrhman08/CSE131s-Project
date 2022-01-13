@@ -1,12 +1,20 @@
 #include "ProgramLoop.h"
 
 #include "Renter.h"
-#include "CarsData.h"
 #include "FileManager.h"
 
 #include <string>
 #include <iostream>
 #include <vector>
+
+void ProgramLoop::rent(std::string plate, std::string name, std::vector<CarsData>& cars, FileManager& fs) {
+	for (int i = 0; i < cars.size(); i++) {
+		if (cars[i].get_license_plates_number() == plate && cars[i].get_renter() == "not rented") {
+			cars[i].set_Renter(name);
+			fs.write(name, fs.getIndex(plate), 3);
+		}
+	}
+}
 
 void ProgramLoop::run() {
 	bool running = true;
@@ -33,18 +41,23 @@ void ProgramLoop::run() {
 		std::cin >> command;
 
 
-		if (command == "show") {
-			for (int i = 0; i < renters.size(); i++)
-				std::cout << renters[i].get_Name() << std::endl;
-		}
-		else if (command == "showcars")
-		{
-			for (int i = 0; i < cars.size(); i++)
-				std::cout << cars[i].get_owner() << std::endl;
-		}
-		else if (command == "rent") {
-			long number;
-			std::cout << "Please enter your number";
+		if (command == "rent") {
+			std::cout << "Please select on of the following cars by plate number: " << std::endl;
+			int index = 1;
+			for (int i = 0; i < carsData.getObjectNumber(); i++) {
+				if (cars[i].get_renter() == "not rented") {
+					std::cout << index << ". model: " << cars[i].get_car_model() << ", plate number: " << cars[i].get_license_plates_number() << std::endl;
+					index++;
+				}
+			}
+
+			std::string plate;
+			std::cin >> plate;
+			std::cout << "Please enter your name" << std::endl;
+			std::string name;
+			std::getline(std::cin, name);
+				rent(plate, name, cars ,carsData);
+			std::cout << carsData.read(3, 3) << std::endl;
 		}
 		else if (command == "exit")
 			running = false;

@@ -19,6 +19,7 @@ public:
 	void write(std::string data, int patch, int patchPart);
 
 	int getObjectNumber() const;
+	int getIndex(std::string searchkey);
 
 	FileManager(std::string filename, int patchsize);
 	~FileManager();

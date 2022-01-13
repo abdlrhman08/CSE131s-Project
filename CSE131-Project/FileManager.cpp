@@ -30,19 +30,34 @@ std::string FileManager::read(int patch, int place) {
 			return part.substr(0, i);
 	}
 
-	//if (part[14] == ' ')
-		//return part.substr(0, 14);
+	if (part[14] == ' ')
+		return part.substr(0, 14);
 
 	return part;
 }
 
+int FileManager::getIndex(std::string searchkey) {
+	std::string buffer;
+
+	for (int i = 0; i < patchnum; i++) {
+		fs.seekg((i * PATCHSIZE), std::ios::beg);
+		std::getline(fs, buffer);
+
+		for (int j = 0; j < PATCHSIZE - PARTSIZE; j += PARTSIZE) {
+			if (buffer.substr(j, searchkey.length()) == searchkey)
+				return i;
+		}
+	}
+
+	return -1;
+}
+
 void FileManager::write(std::string data, int patch, int place) {
-	std::string bufferdata( PARTSIZE, ' ');
+	std::string bufferdata(PARTSIZE, ' ');
 
 	for (int i = 0; i < data.length(); i++)
 		bufferdata[i] = data[i];
-
-	fs.seekp((patch * PATCHSIZE) + (place * PARTSIZE));
+	fs.seekp((patch * PATCHSIZE) + (place * PARTSIZE), std::ios::beg);
 	fs << bufferdata;
 }
 

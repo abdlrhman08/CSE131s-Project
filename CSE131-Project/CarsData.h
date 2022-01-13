@@ -15,6 +15,7 @@ public:
 	void set_license_plates_number(string number);
 	void set_Owner(string owner);
 	void set_Renter(string renter);
+
 private:
 	string car_model;
 	string license_plates_number;
