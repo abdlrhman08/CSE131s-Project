@@ -57,11 +57,42 @@ void FileManager::write(std::string data, int patch, int place) {
 
 	for (int i = 0; i < data.length(); i++)
 		bufferdata[i] = data[i];
+	
+	//Can be overwridden on top of deleted part, had to comment to not get lost in this mess
+	if (this->getObjectNumber() == patch) {
+		int deletedIndex = this->getIndex("DELETED");
+		if (deletedIndex != -1) patch = deletedIndex;
+	}
+
 	fs.seekp((patch * PATCHSIZE) + (place * PARTSIZE), std::ios::beg);
-	fs << bufferdata;
+
+	if ((PATCHSIZE / PARTSIZE) - 1 == place)
+		fs << bufferdata << std::endl;
+	else
+		fs << bufferdata;
 }
 
-int FileManager::getObjectNumber() const {
+void FileManager::deletePatch(int patch) {
+	std::string deletestr(PARTSIZE, ' ');
+	std::string deletiontext = "DELETED";
+
+	for (int i = 0; i < deletiontext.length(); i++)
+		deletestr[i] = deletiontext[i];
+
+	fs.seekp(patch * PATCHSIZE, std::ios::beg);
+	
+	for (int i = 0; i < (PATCHSIZE / PARTSIZE); i++) {
+		if ((PATCHSIZE / PARTSIZE) - 1 == i)
+			fs << deletestr << std::endl;
+		else
+			fs << deletestr;
+	}
+}
+
+int FileManager::getObjectNumber()  {
+	fs.seekg(0, std::ios::end);
+	filesize = fs.tellg();
+	patchnum = filesize / PATCHSIZE;
 	return patchnum;
 }
 

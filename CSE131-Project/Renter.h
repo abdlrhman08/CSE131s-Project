@@ -4,7 +4,6 @@ using namespace std;
 class Renter
 {
 public:
-	Renter();
 	Renter(long long id, string name, string gender, int age, long long licence_number);
 	void set_National_ID(int id);
 	void set_Name(string name);

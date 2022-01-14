@@ -3,11 +3,6 @@
 
 using namespace std;
 
-Renter::Renter() {
-	National_ID = 10000000000000;
-	Age = 21;
-	License_Number = 00000;
-}
 
 Renter::Renter(long long id, string name, string gender, int age, long long licence_number) {
 	National_ID = id;
@@ -18,7 +13,7 @@ Renter::Renter(long long id, string name, string gender, int age, long long lice
 }
 
 void Renter::set_National_ID (int id){
-	if (id < 10000000000000 && id>99999999999999) {
+	if (id <= 10000000000000 && id>=99999999999999) {
 		National_ID = id;
 	}
 	else {
@@ -40,11 +35,11 @@ void Renter::set_Age(int age) {
 
 }
 void Renter::set_Gender(string gender) {
-	if(gender=="male" || gender == "female"){
+	if(gender=="Male" || gender == "Female"){
 		Gender = gender;
 	}
 	else {
-		cout << "please enter your gender (male/female)";
+		cout << "Incorrect type";
 		return;
 	}
 }
