@@ -7,7 +7,6 @@ int main() {
 
 	/*
 		Welcome to our car renter program
-		Made with passion by Abdelrahman Atef Saad and Abdelrahman Zein Mohammed
 		Happy reading :)
 
 		NOTE: when writing data manually on the files, the national ID must be 14 number or else
